@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hangulizer", "Hangulizer\Hangulizer.csproj", "{DA04E350-79F9-4231-925C-7C35BE75F352}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HangulizerTesting", "HangulizerTesting\HangulizerTesting.csproj", "{913BE341-C34A-4052-B25D-EF6BAD2EFACA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HangulizerTests", "HangulizerTests\HangulizerTests.csproj", "{913BE341-C34A-4052-B25D-EF6BAD2EFACA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

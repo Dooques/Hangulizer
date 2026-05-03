@@ -7,25 +7,27 @@ namespace Hangulizer
     {
         private static void Main(string[] args)
         {
-            var translator = new HangulTransformer(HangulLibrary.Hangul);
-            const string sampleHangul = "곰";
-            const string expected = "ㄱㅗㅁ";
+            const string singleChar = "ㅏ";
+            const string singleSyl = "곰";
+            const string multiSyl = "다무";
+            const string multiword = "안녕 친구";
+            var translator = new HangulTranslator(HangulLibrary.Hangul);
 
-            var separateHangul = translator.DecomposeCharacter(sampleHangul);
-
-            Console.WriteLine();
-            Console.WriteLine("Separated Hangul");
-            Console.WriteLine(separateHangul);
-            Console.WriteLine("Expected Hangul:");
-            Console.WriteLine(expected);
-
-            var conjoinedHangul = translator.ComposeCharacters(expected);
-
-            Console.WriteLine();
-            Console.WriteLine("Separated Hangul");
-            Console.WriteLine(sampleHangul);
-            Console.WriteLine("Joined Hangul:");
-            Console.WriteLine(conjoinedHangul);
+            Console.WriteLine("One Character");
+            Console.WriteLine(singleChar);
+            translator.TranslateToPhonetic(singleChar);
+            
+            Console.WriteLine("\nOne Syllable");
+            Console.WriteLine(singleSyl);
+            translator.TranslateToPhonetic(singleSyl);
+            
+            Console.WriteLine("\nTwo Syllables");
+            Console.WriteLine(multiSyl);
+            translator.TranslateToPhonetic(multiSyl);
+            
+            Console.WriteLine("\nTwo Words");
+            Console.WriteLine(multiword);
+            translator.TranslateToPhonetic(multiword);
         }
     }
 }

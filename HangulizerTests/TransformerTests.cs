@@ -2,31 +2,32 @@
 using Hangulizer.Service;
 using Shouldly;
 
-namespace HangulizerTesting;
-
-public class Tests
+namespace HangulizerTests;
+    
+[TestFixture]
+public class TransformerTests
 {
     [Test]
     public void TextDecompositionTest_SplitSyllableIntoParts()
     {
-        string sampleHangul = "곰";
-        string expected = "ㄱㅗㅁ";
+        var sampleHangul = "곰";
+        var expected = "ㄱㅗㅁ";
 
-        var translator = new HangulTransformer(HangulLibrary.Hangul);
+        var translator = new HangulTransformer();
         var result = translator.DecomposeCharacter(sampleHangul);
-        
+
         result.ShouldBe(expected);
     }
-    
+
     [Test]
     public void TextDecompositionTest_JoinSyllableFromJamon()
     {
         string sampleJamon = "ㄱㅗㅁ";
         string expected = "곰";
 
-        var translator = new HangulTransformer(HangulLibrary.Hangul);
+        var translator = new HangulTransformer();
         var result = translator.ComposeCharacters(sampleJamon);
-        
+
         result.ShouldBe(expected);
     }
 }

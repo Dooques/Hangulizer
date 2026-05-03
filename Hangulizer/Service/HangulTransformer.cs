@@ -2,10 +2,8 @@ using System.Text;
 
 namespace Hangulizer.Service;
 
-public class HangulTransformer(Dictionary<string, string> hangulLibrary)
+public class HangulTransformer()
 {
-    private readonly Dictionary<string, string> _hangulLibrary = hangulLibrary;
-
     private readonly int[] _choseongMap =
     {
         0x3131, 0x3132, 0x3134, 0x3137, 0x3138, 0x3139, 0x3141, 0x3142,

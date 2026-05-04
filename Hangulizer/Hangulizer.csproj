@@ -8,10 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="UI\" />
-    </ItemGroup>
-
-    <ItemGroup>
+      <PackageReference Include="NUnit.Mocks" Version="2.6.4" />
       <PackageReference Include="Shouldly" Version="4.3.0" />
     </ItemGroup>
 

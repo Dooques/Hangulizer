@@ -1,5 +1,6 @@
 ﻿using Hangulizer.Data;
 using Hangulizer.Service;
+using Hangulizer.UI;
 
 namespace Hangulizer
 {
@@ -7,27 +8,33 @@ namespace Hangulizer
     {
         private static void Main(string[] args)
         {
-            const string singleChar = "ㅏ";
-            const string singleSyl = "곰";
-            const string multiSyl = "다무";
-            const string multiword = "안녕 친구";
-            var translator = new HangulTranslator(HangulLibrary.Hangul);
-
-            Console.WriteLine("One Character");
-            Console.WriteLine(singleChar);
-            translator.TranslateToPhonetic(singleChar);
+            Console.WriteLine(HangulLibrary.Hangul.Count);
+            HangulTranslator ht = new(HangulLibrary.Hangul);
+            UserInput ui = new();
+            IStdOutput stdOut = new StdOutput();
+            ParseInput pi = new(stdOut);
+            var translating = true;
             
-            Console.WriteLine("\nOne Syllable");
-            Console.WriteLine(singleSyl);
-            translator.TranslateToPhonetic(singleSyl);
+            stdOut.PrintIntroduction();
             
-            Console.WriteLine("\nTwo Syllables");
-            Console.WriteLine(multiSyl);
-            translator.TranslateToPhonetic(multiSyl);
-            
-            Console.WriteLine("\nTwo Words");
-            Console.WriteLine(multiword);
-            translator.TranslateToPhonetic(multiword);
+            while (translating)
+            {
+                try
+                {
+                    stdOut.PromptUser();
+                    var input = ui.Get();
+                    pi.Check(input);
+                    if (input == "exit") translating = false;
+                    else if (input == "clr" || input == "")
+                    {
+                    }
+                    else stdOut.PrintResult(ht.TranslateToPhonetic(input));
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            }
         }
     }
 }

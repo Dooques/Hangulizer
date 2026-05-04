@@ -54,4 +54,16 @@ public class PhoneticTests
         var result = htp.TranslateToPhonetic(input);
         result.ShouldBe(expectedPhonetic);
     }
+    
+    [Test]
+    public static void TransformerTest_LongWithWithㅇ()
+    {
+        const string input = "안녕하세요";
+        const string expectedPhonetic = "annyeonghaseyo";
+
+        HangulTranslator htp = new(HangulLibrary.Hangul);
+        
+        var result = htp.TranslateToPhonetic(input);
+        result.ShouldBe(expectedPhonetic);
+    }
 }

@@ -8,7 +8,6 @@ namespace Hangulizer
     {
         private static void Main(string[] args)
         {
-            Console.WriteLine(HangulLibrary.Hangul.Count);
             HangulTranslator ht = new(HangulLibrary.Hangul);
             UserInput ui = new();
             IStdOutput stdOut = new StdOutput();

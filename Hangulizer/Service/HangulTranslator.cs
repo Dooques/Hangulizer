@@ -24,18 +24,12 @@ public class HangulTranslator(Dictionary<string, string> hangulLibrary)
         {
             foreach (var t in word)
             {
-                Console.WriteLine(t);
-                
                 var splitGuelja = ht.DecomposeCharacter(t.ToString());
                 var j = 0;
                 
                 foreach (var jamo in splitGuelja)
                 {
-                    Console.WriteLine(jamo + " " + j);
-                    if (jamo is 'ㅇ' && j == 0)
-                    {
-                        Console.WriteLine("Skipped null consonant");
-                    }
+                    if (jamo is 'ㅇ' && j == 0) { }
                     else
                     {
                         var jamoString = jamo.ToString();

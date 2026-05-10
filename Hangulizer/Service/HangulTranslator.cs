@@ -5,44 +5,73 @@ namespace Hangulizer.Service;
 
 public class HangulTranslator(Dictionary<string, string> hangulLibrary)
 {
-    private readonly int[] _jongseongMap =
-    {
-        0x3131, 0x3132, 0x3133, 0x3134, 0x3135, 0x3136, 0x3137, 0x3139,
-        0x313A, 0x313B, 0x313C, 0x313D, 0x313E, 0x313F, 0x3140, 0x3141,
-        0x3142, 0x3144, 0x3145, 0x3146, 0x3147, 0x3148, 0x314A, 0x314B,
-        0x314C, 0x314D, 0x314E
-    };
-
     public string TranslateToPhonetic(string hangulScript)
     {
         HangulTransformer ht = new();
         var splitScript = hangulScript.Split(' ');
         StringBuilder sb = new();
         
-        var i = 0;
+        var scriptIndex = 0;
+        Console.WriteLine("Word:" + scriptIndex);
         foreach (var word in splitScript)
         {
-            foreach (var t in word)
+            Console.WriteLine(word);
+            var wordIndex = 0;
+            foreach (var guelja in word)
             {
-                var splitGuelja = ht.DecomposeCharacter(t.ToString());
-                var j = 0;
+                var splitGuelja = ht.DecomposeCharacter(guelja.ToString());
+                var gueljaIndex = 0;
+
+                Console.WriteLine("Guelja:" + gueljaIndex);
+                Console.WriteLine(guelja);
                 
+                var jamoString = "";
                 foreach (var jamo in splitGuelja)
                 {
-                    if (jamo is 'ㅇ' && j == 0) { }
-                    else
+                    Console.WriteLine("jamo: " + jamo);
+                    switch (jamo)
                     {
-                        var jamoString = jamo.ToString();
-                        jamoString = hangulLibrary[jamoString];
-                        sb.Append(jamoString);
+                        case 'ㅇ' when gueljaIndex == 0:
+                            break;
+                        case 'ㄹ' when gueljaIndex == splitGuelja.Length - 1:
+                            jamoString = "xㄹ";
+                            break;
+                        case 'ㄱ' when word.Length > 1 && wordIndex < word.Length - 1 && word[wordIndex + 1].ToString()[0] is 'ㅁ':
+                            jamoString = "ㅇ";
+                            break;
+                        case 'ㄴ' when word.Length > 1 && wordIndex < word.Length -1 && word[wordIndex + 1].ToString()[0] is 'ㄹ':
+                            jamoString = "xㄹ";
+                            break;
+                        case 'ㅂ' when word.Length > 1 && wordIndex < word.Length - 1 && word[wordIndex + 1].ToString()[0] is 'ㄴ':
+                            jamoString = "ㅁ";
+                            break;
+                        case 'ㄹ' when wordIndex > 0 && wordIndex < word.Length -1 && ht.DecomposeCharacter(word[^1].ToString())[^1] is 'ㅇ':
+                            jamoString = "ㄴ";
+                            break;
+                        case 'ㄱ' when gueljaIndex == splitGuelja.Length - 1:
+                        case 'ㄵ' when wordIndex == word.Length - 1:
+                        case 'ㄳ' when wordIndex == word.Length - 1: 
+                            jamoString = "ㅋ";
+                            break;
+                        default:
+                            jamoString = jamo.ToString();
+                            break;
                     }
 
-                    j++;
+                    if (char.IsLetter(jamo) && jamoString is not "")
+                    {
+                        Console.WriteLine("Letter Found: " + jamo);
+                        Console.WriteLine(jamoString = hangulLibrary[jamoString]);
+                    }
+                    
+                    sb.Append(jamoString);
+                    gueljaIndex++;
                 }
+                wordIndex++;
             }
-
-            if (i < (splitScript.Length - 1))sb.Append(' ');
-            i++;
+            
+            if (scriptIndex < (splitScript.Length - 1))sb.Append(' ');
+            scriptIndex++;
         }
         return sb.ToString();
     }

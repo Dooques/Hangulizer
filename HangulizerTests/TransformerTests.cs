@@ -20,13 +20,13 @@ public class TransformerTests
     }
 
     [Test]
-    public void TextDecompositionTest_JoinSyllableFromJamon()
+    public void TextDecompositionTest_JoinSyllableFromJamo()
     {
-        string sampleJamon = "ㄱㅗㅁ";
+        string sample = "ㄱㅗㅁ";
         string expected = "곰";
 
         var translator = new HangulTransformer();
-        var result = translator.ComposeCharacters(sampleJamon);
+        var result = translator.ComposeCharacters(sample);
 
         result.ShouldBe(expected);
     }
